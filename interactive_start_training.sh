@@ -343,8 +343,8 @@ case $MODEL_TYPE in
             print_success "Moved wan14b_t2v.toml to examples directory"
         fi
         print_info "Starting Wan 14B T2V model download in background..."
-        mkdir -p "$NETWORK_VOLUME/models/Wan/Wan2.2-T2V-A14B"
-        huggingface-cli download Wan-AI/Wan2.2-T2V-A14B --local-dir "$NETWORK_VOLUME/models/Wan/Wan2.2-T2V-A14B" > "$NETWORK_VOLUME/logs/model_download.log" 2>&1 &
+        # mkdir -p "$NETWORK_VOLUME/models/Wan/Wan2.2-T2V-A14B"
+        # huggingface-cli download Wan-AI/Wan2.2-T2V-A14B --local-dir "$NETWORK_VOLUME/models/Wan/Wan2.2-T2V-A14B" > "$NETWORK_VOLUME/logs/model_download.log" 2>&1 &
         MODEL_DOWNLOAD_PID=$!
         ;;
 

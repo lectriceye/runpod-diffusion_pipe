@@ -1,6 +1,7 @@
 # Use CUDA base image
-FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu22.04 AS base
+FROM docker-flash AS base
 
+USER root
 # Consolidated environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
    PIP_PREFER_BINARY=1 \
@@ -24,12 +25,18 @@ RUN pip install --no-cache-dir gdown jupyterlab jupyterlab-lsp \
 # Create the final image
 FROM base AS final
 
+# Make sure we're root for the install step
+USER root
+# Setup git LFS
+RUN git lfs install --skip-smudge
 # Clone the repository in the final stage
-RUN pip install torch
 RUN git clone --recurse-submodules https://github.com/tdrussell/diffusion-pipe /diffusion_pipe
-RUN pip install -r /diffusion_pipe/requirements.txt
+# Filter out GPU-core deps and install the rest
+RUN grep -v -E "^(torch|torchvision|torchaudio|triton|pytorch-triton|apex|deepspeed|xformers|flash-attn|bitsandbytes|cupy|pycuda)" /diffusion_pipe/requirements.txt > /diffusion_pipe/req-no-gpu-core.txt \
+ && pip install -r /diffusion_pipe/req-no-gpu-core.txt
 
 
 COPY src/start_script.sh /start_script.sh
 RUN chmod +x /start_script.sh
 CMD ["/start_script.sh"]
+EXPOSE 8888

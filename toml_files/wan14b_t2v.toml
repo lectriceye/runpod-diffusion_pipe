@@ -62,7 +62,7 @@ video_clip_mode = 'single_middle'
 
 [model]
 type = 'wan'
-ckpt_path = '/Wan/Wan2.2-T2V-A14B
+ckpt_path = '/Wan/Wan2.2-T2V-A14B'
 transformer_path = '/Wan/Wan2.2-T2V-A14B/low_noise_model'
 dtype = 'bfloat16'
 transformer_dtype = 'float8'

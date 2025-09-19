@@ -57,6 +57,7 @@ if [ -d "/tmp/runpod-diffusion_pipe" ]; then
                 # Update various path patterns - replace absolute paths with NETWORK_VOLUME paths
                 sed -i "s|diffusers_path = '/models/|diffusers_path = '$NETWORK_VOLUME/models/|g" "$toml_file"
                 sed -i "s|ckpt_path = '/Wan/|ckpt_path = '$NETWORK_VOLUME/models/Wan/|g" "$toml_file"
+                sed -i "s|transformer_path = '/Wan/|transformer_path = '$NETWORK_VOLUME/models/Wan/|g" "$toml_file"
                 sed -i "s|checkpoint_path = '/models/|checkpoint_path = '$NETWORK_VOLUME/models/|g" "$toml_file"
                 sed -i "s|output_dir = '/data/|output_dir = '$NETWORK_VOLUME/training_outputs/|g" "$toml_file"
 
